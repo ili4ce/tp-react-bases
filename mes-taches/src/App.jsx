@@ -14,18 +14,31 @@ const TACHES_INITIALES = [
 function App() {
   const [taches, setTaches] = useState(TACHES_INITIALES)
 
+  function basculerTache(id) {
+    setTaches(
+      taches.map((tache) =>
+        tache.id === id ? { ...tache, terminee: !tache.terminee } : tache
+      )
+    )
+  }
+
+  function supprimerTache(id) {
+    setTaches(taches.filter((tache) => tache.id !== id))
+  }
+
   return (
     <div className="app">
-      <Entete 
-        titre="Mes tâches" 
-        sousTitre="Mon premier projet React" 
-      />
+      <Entete titre="Mes tâches" sousTitre="Mon premier projet React" />
       
       <Carte titre="Ma liste">
-        <ListeTaches taches={taches} />
+        <ListeTaches 
+          taches={taches} 
+          onBasculer={basculerTache} 
+          onSupprimer={supprimerTache} 
+        />
       </Carte>
 
-      <Pied auteur="iliace bella" />
+      <Pied auteur="Votre Nom" />
     </div>
   )
 }
